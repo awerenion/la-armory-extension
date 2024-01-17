@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.main.js.daf9a1eb.34f600a7.js"
+        "assets/content-script-loader.main.js.7e9caee1.14a90e73.js"
       ],
       "matches": [
         "https://*.лостарк.рф/*"
@@ -40,7 +40,7 @@
       ],
       "resources": [
         "assets/runtime-dom.esm-bundler.15a124d3.js",
-        "assets/main.js.daf9a1eb.js"
+        "assets/main.js.7e9caee1.js"
       ],
       "use_dynamic_url": true
     }
