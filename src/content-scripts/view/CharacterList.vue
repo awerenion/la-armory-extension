@@ -4,7 +4,7 @@
         :key="idx + 'ch'"
     >
         <span>
-            <button type="button">
+            <button type="button" @click="moveTo(character.name)">
                 <img :src="character.img" :alt="character.characterClass">
                 Ур.{{ character.level }}
                 <span>{{ character.name }}({{ character.gs }})</span>
@@ -19,6 +19,10 @@ import { computed } from 'vue';
 const props = defineProps({
     characterList: Array,
 })
+
+const moveTo = (name) => {
+    location.href = `/Profile/Character/${name}`
+}
 
 const sortedCharacterList = computed(() => {
     return props.characterList.sort((a,b) => {
