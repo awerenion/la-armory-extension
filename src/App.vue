@@ -1,7 +1,6 @@
 <script setup>
 import SettingsPage from './components/SettingsPage.vue'
 import {ref} from 'vue'
-import MariShop from "./components/MariShop.vue";
 
 const tab = ref(null)
 </script>
