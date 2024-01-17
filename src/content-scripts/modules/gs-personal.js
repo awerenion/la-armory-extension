@@ -25,5 +25,5 @@ export function loadAllCharacters(charList) {
             })
             createApp(CharacterList, {characterList: characterList[index]}).mount(element);
         })
-    }, 1300)
+    }, charList.length * 130);
 }
