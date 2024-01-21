@@ -12,13 +12,14 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             .then(response => {
                 let level = response.data
                     .split('<span>Уровень персонажа</span><span><small>Ур.</small>')[1]
-                    .split('</span></div>')[0]
+                    .split('</span></div>')[0];
                 let gscore = response.data
                     .split('<span>Максимальный рейтинг</span><span><small>Ур.</small>')[1]
                     .split('</small></span></div>')[0]
                     .replace('<small>', '')
                     .replace(',', '')
                     .replace('.00', '');
+                
                 sendResponse({
                     name: request.name,
                     gs: gscore,

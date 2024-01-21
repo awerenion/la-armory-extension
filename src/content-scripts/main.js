@@ -15,7 +15,6 @@ async function initStorageCache() {
 try {
     document.querySelectorAll("#expand-character-list > ul > li").forEach((character) => {
         characterList.push({
-            element: character.querySelector('span > button > span'),
             name: character.querySelector("button span").textContent,
             class: character.querySelector("button img").getAttribute('alt')
         });
