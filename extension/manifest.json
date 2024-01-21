@@ -12,13 +12,13 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.main.js.2271a1a8.03659fee.js"
+        "assets/content-script-loader.main.js.bc31b211.243437da.js"
       ],
       "matches": [
         "https://*.лостарк.рф/*"
       ],
       "css": [
-        "assets/main.js.a4819715.css"
+        "assets/main.js.191c96cf.css"
       ]
     }
   ],
@@ -39,8 +39,8 @@
         "https://*.лостарк.рф/*"
       ],
       "resources": [
-        "assets/runtime-dom.esm-bundler.15a124d3.js",
-        "assets/main.js.2271a1a8.js"
+        "assets/plugin-vue_export-helper.dc637d8f.js",
+        "assets/main.js.bc31b211.js"
       ],
       "use_dynamic_url": true
     }
