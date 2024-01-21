@@ -47,7 +47,7 @@ export const ENGRAVINGS = {
     'Универсал': '/ability/ability_242.png',
     'Пистолеты и пули': '/buff/buff_600.png',
     'Кибер-солдат': '/ability/ability_271.png',
-    'Бомбардировка': '/gl/gl_skill_01_26.png',
+    'Бомбардировка': '/gl_skill/gl_skill_01_26.png',
     'Рвение защитника': '/ability/ability_266.png',
     'Герой-одиночка': '/ability/ability_267.png',
     'Четвертая чакра': '/buff/buff_238.png',
