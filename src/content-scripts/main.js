@@ -23,16 +23,16 @@ try {
 
     initStorageCache()
         .then(() => {
-        if (cachedSettings.loadAtStart) {
-            loadAllCharacters(characterList)
-        }
-        if (cachedSettings.displayQuality) {
-            displayQuality();
-        }
-        if (cachedSettings.modifyEngravings) {
-            modifyEngravingsList();
-        }
-    });
+            if (cachedSettings.loadAtStart) {
+                loadAllCharacters(characterList)
+            }
+            if (cachedSettings.displayQuality) {
+                displayQuality();
+            }
+            if (cachedSettings.modifyEngravings) {
+                modifyEngravingsList();
+            }
+        });
 } catch (e) {
     console.error(e)
 }
