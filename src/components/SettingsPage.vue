@@ -81,5 +81,6 @@ onMounted(() => {
 .ext-block-labels {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 </style>
