@@ -40,7 +40,7 @@ onMounted(() => {
   <div>
     <label>
       <input type="checkbox" v-model="state.loadAtStart">
-      Загружать всех персонажей при открытии страницы
+      Загружать рейтинг снаряжения
     </label>
     <br>
     <label>
