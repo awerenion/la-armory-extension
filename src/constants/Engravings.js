@@ -91,5 +91,9 @@ export const ENGRAVINGS = {
     'Хищница': '/ability/ability_260.png',
     'Воля палача': '/ability/ability_261.png',
     'Бледная луна': '/ability/ability_263.png',
-    'Узы судьбы': '/ability/ability_264.png'
+    'Узы судьбы': '/ability/ability_264.png',
+    'Износ': '/ability/ability_219.png',
+    'Медлительность': '/ability/ability_221.png',
+    'Ржавчина': '/ability/ability_218.png',
+    'Миролюбие': '/ability/ability_220.png',
 };

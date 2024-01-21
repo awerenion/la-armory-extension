@@ -19,24 +19,27 @@ const computedStyle = computed(() => ({
     backgroundColor: (function () {
         let colorId;
         switch (true) {
-        case props.quality === 0:
-            colorId = 0;
-            break;
-        case props.quality < 39:
-            colorId = 25;
-            break;
-        case props.quality < 70:
-            colorId = 50;
-            break;
-        case props.quality < 90:
-            colorId = 70;
-            break;
-        case props.quality < 100:
-            colorId = 90;
-            break;
-        case props.quality === 100:
-            colorId = 100;
-            break;
+            case props.quality === 0:
+                colorId = 0;
+                break;
+            case props.quality < 10:
+                colorId = 10;
+                break;
+            case props.quality < 30:
+                colorId = 30;
+                break;
+            case props.quality < 70:
+                colorId = 70;
+                break;
+            case props.quality < 90:
+                colorId = 90;
+                break;
+            case props.quality < 100:
+                colorId = 99;
+                break;
+            case props.quality === 100:
+                colorId = 100;
+                break;
         }
         return COLOR_TABLE[colorId];
     })(),
