@@ -3,7 +3,7 @@ import {onMounted, reactive} from "vue";
 
 const state = reactive({loadAtStart: true, modifyEngravings: true, displayQuality: true})
 
-function restore_settings() {
+function restoreSettings() {
   chrome.storage.sync.get({
     loadAtStart: true,
     modifyEngravings: true,
@@ -15,44 +15,71 @@ function restore_settings() {
   });
 }
 
-function save_settings() {
+function saveSettings() {
   chrome.storage.sync.set({
     loadAtStart: state.loadAtStart,
     modifyEngravings: state.modifyEngravings,
     displayQuality: state.displayQuality
-  }, saved_successfully);
+  }, savedSuccessfully);
 }
 
-function saved_successfully() {
+function savedSuccessfully() {
   const status = document.getElementById('status');
-  status.textContent = 'Options saved.';
+  status.textContent = 'Настройки сохранены';
   setTimeout(function () {
     status.textContent = '';
   }, 750);
 }
 
 onMounted(() => {
-  restore_settings();
+  restoreSettings();
 })
 </script>
 
 <template>
-  <div>
-    <label>
-      <input type="checkbox" v-model="state.loadAtStart">
+  <div class="ext-block">
+    <label class="ext-block-labels">
+      <input
+        type="checkbox"
+        v-model="state.loadAtStart"
+      >
       Загружать рейтинг снаряжения
     </label>
-    <br>
-    <label>
-      <input type="checkbox" v-model="state.modifyEngravings">
+    <label class="ext-block-labels">
+      <input
+        type="checkbox"
+        v-model="state.modifyEngravings"
+      >
       Список гравировок одним блоком(без разделения на страницы)
     </label>
-    <br>
-    <label>
-      <input type="checkbox" v-model="state.displayQuality">
+    <label class="ext-block-labels">
+      <input
+        type="checkbox"
+        v-model="state.displayQuality"
+      >
       Отображать полоску с качеством
     </label>
   </div>
-  <v-btn variant="outlined" @click="save_settings" id="save" color="normal">Save</v-btn>
+  <v-btn
+    id="save"
+    variant="outlined"
+    color="normal"
+    class="mb-3"
+    @click="saveSettings"
+  >Сохранить</v-btn>
   <div id="status"></div>
 </template>
+
+<style scoped>
+.ext-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ext-block-labels {
+  display: flex;
+  align-items: center;
+}
+</style>
