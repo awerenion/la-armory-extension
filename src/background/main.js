@@ -1,8 +1,29 @@
 import axios from "axios";
 import * as API from "../constants/ApiRef";
 import fetchAdapter from "@vespaiach/axios-fetch-adapter";
+import { CLASS_TABLE } from "../constants/ClassTable";
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.type === 'load-for-class') {
+        axios.request({
+            method: 'post',
+            url: API.LOST_ARK_URL,
+            adapter: fetchAdapter,
+            data: {
+                id: 1,
+                jsonrpc: "2.0",
+                method: "avatarRating_getRatingByClass",
+                params: {
+                    class: CLASS_TABLE[request.message].toString()
+                }
+            }
+        }).
+            then(response => {
+                const findCharacter = response.data.result.find((item) => item.nickname === request.nickname);
+                sendResponse({ placement: findCharacter.place });
+            })
+            .catch(error => console.error(error))
+    }
     if (request.type === 'load-character-info') {
         axios.request({
             method: 'get',
@@ -10,9 +31,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             adapter: fetchAdapter
         })
             .then(response => {
-                let level = response.data
-                    .split('<span>Уровень персонажа</span><span><small>Ур.</small>')[1]
-                    .split('</span></div>')[0];
                 let gscore = response.data
                     .split('<span>Максимальный рейтинг</span><span><small>Ур.</small>')[1]
                     .split('</small></span></div>')[0]
@@ -23,7 +41,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 sendResponse({
                     name: request.name,
                     gs: gscore,
-                    level,
                 });
             })
             .catch(error => console.error(error))
