@@ -5,8 +5,8 @@
             @click="moveTo(character.name)"
         >
             <img :src="character.img" :alt="character.characterClass">
-            Рейтинг: {{ placement || 'Не в рейтинге' }}
             <span>{{ character.name }}({{ character.gs }})</span>
+            Рейтинг: {{ placement || 'Не в рейтинге' }}
         </button>
     </span>
 </template>
