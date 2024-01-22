@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         }).
             then(response => {
                 const findCharacter = response.data.result.find((item) => item.nickname === request.nickname);
-                sendResponse({ placement: findCharacter.place });
+                sendResponse({ placement: findCharacter ? findCharacter.place : null});
             })
             .catch(error => console.error(error))
     }

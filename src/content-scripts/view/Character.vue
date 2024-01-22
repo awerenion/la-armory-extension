@@ -30,7 +30,7 @@ onMounted(() => {
         message: props.character.characterClass,
         nickname: props.character.name
     }, (response) => {
-        placement.value = response.placement || null;
+        placement.value = response.placement;
     });
 })
 </script>
