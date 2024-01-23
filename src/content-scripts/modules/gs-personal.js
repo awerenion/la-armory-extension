@@ -1,4 +1,4 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
 import CharacterList from "../view/CharacterList.vue";
 
 export function loadAllCharacters(charList) {

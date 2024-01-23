@@ -1,4 +1,4 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
 import EngravingList from "../view/EngravingList.vue";
 
 export function modifyEngravingsList() {

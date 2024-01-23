@@ -4,6 +4,27 @@ import fetchAdapter from "@vespaiach/axios-fetch-adapter";
 import { CLASS_TABLE } from "../constants/ClassTable";
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.type === 'load-elixirs') {
+        axios.request({
+            method: 'get',
+            url: API.ARMORY_URL + request.name,
+            adapter: fetchAdapter
+        })
+            .then(response => {
+                const splitedHtml = response.data.split("<FONT color='#FFD200'>[");
+                const elixirLevel = splitedHtml.reduce((acc, v) => {
+                    const elementSplit = v.split("<FONT color='#FFD200'>");
+                    if (elementSplit.length === 2) {
+                        return acc += +elementSplit[1][0];
+                    }
+                    return acc;
+                }, 0)
+                sendResponse({
+                    elixirLevel
+                })
+            })
+            .catch(error => console.error(error))
+    }
     if (request.type === 'load-for-class') {
         axios.request({
             method: 'post',

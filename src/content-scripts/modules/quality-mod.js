@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 import QualityBar from "../view/QualityBar.vue";
 
 export function displayQuality() {
