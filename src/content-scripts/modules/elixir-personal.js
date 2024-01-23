@@ -45,7 +45,7 @@ function loadCharacterElixirs() {
 
                 const elixirs = [];
 
-                if (profileData[0].Equip[gearId].Element_008.value.Element_000.topStr) {
+                if (profileData[0].Equip[gearId].Element_008.value?.Element_000?.topStr) {
                     const elixirsBlock = profileData[0].Equip[gearId].Element_008.value.Element_000.contentStr
                     for (let elixir in elixirsBlock) {
                         const elixirSplit = elixirsBlock[elixir].contentStr.split("]</FONT>")[1].split("<FONT color='#FFD200'>");
