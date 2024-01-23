@@ -2,7 +2,7 @@ import { SETTINGS_DEFAULT } from "../constants/SettingsOptions";
 import { displayQuality } from "./modules/quality-mod"
 import { modifyEngravingsList } from "./modules/engravings-mod"
 import { loadAllCharacters } from "./modules/gs-personal";
-import { loadCharacterElixirs } from "./modules/elixir-personal";
+import { validateCharacterGs } from "./modules/elixir-personal";
 
 let cachedSettings = {};
 let characterList = [];
@@ -20,11 +20,14 @@ try {
             class: character.querySelector("button img").getAttribute('alt')
         });
     });
-    const charName = document.querySelector('.profile-character-info__name').innerHTML;
+
+    const charName = document.querySelector('.profile-character-info__name').innerHTML
 
     initStorageCache()
         .then(() => {
-            loadCharacterElixirs(charName)
+            if (cachedSettings.loadElixirs) {
+                validateCharacterGs(charName)
+            }
             if (cachedSettings.loadAtStart) {
                 loadAllCharacters(characterList)
             }

@@ -1,15 +1,17 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 
-const state = reactive({ loadAtStart: true, modifyEngravings: true, displayQuality: true })
+const state = reactive({ loadAtStart: true, modifyEngravings: true, displayQuality: true, loadElixirs: true })
 
 function restoreSettings() {
     chrome.storage.sync.get({
+        loadElixirs: true,
         loadAtStart: true,
         modifyEngravings: true,
         displayQuality: true
     }, function (items) {
         state.loadAtStart = items.loadAtStart;
+        state.loadElixirs = items.loadElixirs;
         state.modifyEngravings = items.modifyEngravings;
         state.displayQuality = items.displayQuality;
     });
@@ -18,6 +20,7 @@ function restoreSettings() {
 function saveSettings() {
     chrome.storage.sync.set({
         loadAtStart: state.loadAtStart,
+        loadElixirs: state.loadElixirs,
         modifyEngravings: state.modifyEngravings,
         displayQuality: state.displayQuality
     }, savedSuccessfully);
@@ -38,6 +41,13 @@ onMounted(() => {
 
 <template>
     <div class="ext-block">
+        <label class="ext-block-labels">
+            <input
+                type="checkbox"
+                v-model="state.loadElixirs"
+            >
+            Загружать таблицу эликсиров
+        </label>
         <label class="ext-block-labels">
             <input
                 type="checkbox"
