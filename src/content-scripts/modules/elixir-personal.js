@@ -1,5 +1,6 @@
 import { createApp } from "vue";
-import { USELESS_EQUIP } from "../../constants/Elixirs";
+import { EQUIP_NAME, MAX_ELIXIR_EQUIP_COUNT, ELEMENT_CLASSES_TO_REMOVE } from '../../constants/Elixirs'
+import { removeHtmlElements } from '../../utils/DOMUtils'
 import Elixir from "../view/Elixir.vue";
 
 export function validateCharacterGs(charName) {
@@ -14,69 +15,54 @@ export function validateCharacterGs(charName) {
                 loadCharacterElixirs();
             }
         }
-    }, 30);
+    }, 10);
 }
 
 function loadCharacterElixirs() {
-    let profileData = {};
     const equipmentList = document.querySelectorAll('.profile-equipment__slot>div');
-    profileData = JSON.parse(document.querySelector('#profile-ability > script').innerText.replace(/.+\{/, '[{').replace(/;\n$/, ']'))
+    const [profileData] = JSON.parse(document.querySelector('#profile-ability > script').innerText.replace(/.+\{/, '[{').replace(/;\n$/, ']'))
     const items = [];
     equipmentList.forEach(element => {
-        if (element.classList.length === 1 && parseInt(element.className.replace(/slot(\d+)$/, '$1')) <= 11) {
-            let gearId = element.getAttribute('data-item');
-            const itemValue = profileData[0].Equip[gearId].Element_000.value;
-            if (
-                !itemValue.includes(USELESS_EQUIP[0]) &&
-                !itemValue.includes(USELESS_EQUIP[1]) &&
-                !itemValue.includes(USELESS_EQUIP[2])
-            ) {
-                let itemName = itemValue
-                    .split('</FONT></P>')[0]
-                    .split(': ')[1]
-                    .replace('[I] ', '')
-                    .replace('[II] ', '');
-                if (itemName.includes('Преобр')) {
-                    itemName = itemName.split(' ')[1]
-                } else {
-                    itemName = itemName.split(' ')[0]
-                }
-                itemName = itemName[0].toUpperCase() + itemName.slice(1);
+        const classId = element.classList.length === 1 && +(element.className.replace(/slot(\d+)$/, '$1'))
+        if (Number.isInteger(classId) && classId <= MAX_ELIXIR_EQUIP_COUNT) {
+            const gearId = element.getAttribute('data-item');
+            const equipItem = profileData.Equip[gearId]
+            const itemName = EQUIP_NAME[classId - 1]
+            const elixirs = !!equipItem.Element_008.value?.Element_000?.topStr && 
+                Object
+                    .values(equipItem.Element_008?.value?.Element_000?.contentStr)
+                    .map(elixir => parseElixir(elixir.contentStr))
+                || []
 
-                const elixirs = [];
-
-                if (profileData[0].Equip[gearId].Element_008.value?.Element_000?.topStr) {
-                    const elixirsBlock = profileData[0].Equip[gearId].Element_008.value.Element_000.contentStr
-                    for (let elixir in elixirsBlock) {
-                        const elixirSplit = elixirsBlock[elixir].contentStr.split("]</FONT>")[1].split("<FONT color='#FFD200'>");
-                        let elixirEffect = [];
-                        if (elixirSplit[1].split('<br>')[1].includes('<BR>')) {
-                            elixirEffect = [...elixirSplit[1].split('<br>')[1].split('<BR>')];
-                        } else {
-                            elixirEffect.push(elixirSplit[1].split('<br>')[1])
-                        }
-                        const elixirType = '[' + elixirsBlock[elixir].contentStr.split('[')[1].split(']')[0] + ']'
-                        elixirs.push({
-                            elixirLevel: elixirSplit[1][0],
-                            elixirName: elixirSplit[0].trim(),
-                            elixirType,
-                            elixirEffect
-                        });
-                    }
-                }
-                items.push({
-                    itemName,
-                    elixirs
-                })
-            }
+            items.push({
+                itemName,
+                elixirs
+            })
         }
     })
-    items.pop();
+    createApp(Elixir, { elixirs: items }).mount(createElixirBlock());
+}
+
+const parseElixir = (elixir) => {
+    const [, elixirName, elixirValue] = elixir.match(/<\/FONT>(.*)<FONT color='#FFD200'>(.*)/);
+    const elixirEffect = [...elixirValue.split('<br>')[1].split('<BR>')];
+    const [elixirType] = elixir.match(/\[(.*)\]/)
+    return {
+        elixirLevel: elixirValue[0],
+        elixirName: elixirName.trim(),
+        elixirType,
+        elixirEffect
+    };
+}
+
+const createElixirBlock = () => {
     const element = document.querySelector('#profile-equipment');
     const newElement = document.createElement('div');
+
     newElement.classList.add('elixir-block')
     element.appendChild(newElement);
-    document.querySelector('.slot14').remove();
-    document.querySelector('.slot15').remove();
-    createApp(Elixir, { elixirs: items }).mount(newElement);
+
+    removeHtmlElements(ELEMENT_CLASSES_TO_REMOVE)
+
+    return newElement
 }

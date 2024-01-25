@@ -109,6 +109,7 @@ const getElixirLevel = computed(() => {
     line-height: 16px;
     color: #e4ba27;
     height: 30px;
+    text-transform: capitalize;
 }
 
 .elixirs-wrapper-ext-items:hover {
