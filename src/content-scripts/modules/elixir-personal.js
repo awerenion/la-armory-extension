@@ -28,9 +28,10 @@ function loadCharacterElixirs() {
             const gearId = element.getAttribute('data-item');
             const equipItem = profileData.Equip[gearId]
             const itemName = EQUIP_NAME[classId - 1]
-            const elixirs = !!equipItem.Element_008.value?.Element_000?.topStr && 
+            const elixirContent = getElixirContentOnEquipItem(equipItem)
+            const elixirs = elixirContent && 
                 Object
-                    .values(equipItem.Element_008?.value?.Element_000?.contentStr)
+                    .values(elixirContent)
                     .map(elixir => parseElixir(elixir.contentStr))
                 || []
 
@@ -44,15 +45,21 @@ function loadCharacterElixirs() {
 }
 
 const parseElixir = (elixir) => {
-    const [, elixirName, elixirValue] = elixir.match(/<\/FONT>(.*)<FONT color='#FFD200'>(.*)/);
-    const elixirEffect = [...elixirValue.split('<br>')[1].split('<BR>')];
-    const [elixirType] = elixir.match(/\[(.*)\]/)
-    return {
-        elixirLevel: elixirValue[0],
-        elixirName: elixirName.trim(),
-        elixirType,
-        elixirEffect
-    };
+    try {
+        const elixirMatch = elixir.match(/<\/FONT>(.*)<FONT color='#FFD200'>(.*)/);
+        const [, elixirName, elixirValue] = elixirMatch
+        const elixirEffect = [...elixirValue.split('<br>')[1].split('<BR>')];
+        const [elixirType] = elixir.match(/\[(.*)\]/)
+        return {
+            elixirLevel: +elixirValue[0] || 0,
+            elixirName: elixirName.trim(),
+            elixirType,
+            elixirEffect
+        };
+    } catch(err) {
+        console.error(err)
+    }
+
 }
 
 const createElixirBlock = () => {
@@ -65,4 +72,16 @@ const createElixirBlock = () => {
     removeHtmlElements(ELEMENT_CLASSES_TO_REMOVE)
 
     return newElement
+}
+// (╮°-°)╮┳━━┳ ( ╯°□°)╯ ┻━━┻
+const getElixirContentOnEquipItem = (equipItem) => {
+    try {
+        if (!equipItem?.Element_007.value?.Element_000?.topStr && !equipItem?.Element_008.value?.Element_000?.topStr) {
+            return null
+        }
+        return equipItem.Element_007?.value?.Element_000?.contentStr || equipItem?.Element_008?.value?.Element_000?.contentStr 
+    } catch (err) {
+        console.error(err)
+        return null
+    }
 }
