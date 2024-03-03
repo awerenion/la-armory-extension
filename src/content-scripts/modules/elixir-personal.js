@@ -74,12 +74,21 @@ const createElixirBlock = () => {
     return newElement
 }
 // (╮°-°)╮┳━━┳ ( ╯°□°)╯ ┻━━┻
+// ебучий случай бекендеров этого дерьма
+// ( ╯°□°)╯ ┻━━┻ (╮°-°)╮┳━━┳ 
 const getElixirContentOnEquipItem = (equipItem) => {
     try {
-        if (!equipItem?.Element_007.value?.Element_000?.topStr && !equipItem?.Element_008.value?.Element_000?.topStr) {
+        const findedElexirElement = [
+            equipItem?.Element_007.value,
+            equipItem?.Element_008.value,
+            equipItem?.Element_009.value,
+        ].find(v => v?.Element_000?.topStr?.startsWith(`<FONT SIZE='12' COLOR='#A9D0F5'>Эффекты эликсира`))
+
+        if (!findedElexirElement) {
             return null
         }
-        return equipItem.Element_007?.value?.Element_000?.contentStr || equipItem?.Element_008?.value?.Element_000?.contentStr 
+
+        return findedElexirElement.Element_000.contentStr
     } catch (err) {
         console.error(err)
         return null
