@@ -12,7 +12,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.main.js.7204ab40.472d07b5.js"
+        "assets/content-script-loader.main.js.6be5113c.bde3d4fb.js"
       ],
       "matches": [
         "https://*.лостарк.рф/*"
@@ -40,7 +40,7 @@
       ],
       "resources": [
         "assets/plugin-vue_export-helper.ee8e1f3c.js",
-        "assets/main.js.7204ab40.js"
+        "assets/main.js.6be5113c.js"
       ],
       "use_dynamic_url": true
     }
