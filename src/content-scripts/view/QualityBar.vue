@@ -1,6 +1,6 @@
-<template class="bar">
+<template>
     <img :src=props.url alt="">
-    <div class="bar">
+    <div v-if="props.quality !== -1" class="bar">
         <div class="quality" :style=computedStyle />
     </div>
 </template>
@@ -47,7 +47,11 @@ const computedStyle = computed(() => ({
 }))
 </script>
 
-<style scoped>
+<style>
+.no-before::before {
+    display: none !important;
+}
+
 .bar {
     width: 90%;
     background-color: lightgray;

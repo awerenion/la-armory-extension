@@ -14,13 +14,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 jsonrpc: "2.0",
                 method: "avatarRating_getRatingByClass",
                 params: {
-                    class: CLASS_TABLE[request.message].toString()
+                    class: CLASS_TABLE[request.message]
                 }
             }
         }).
             then(response => {
-                const findCharacter = response.data.result.find((item) => item.nickname === request.nickname);
-                sendResponse({ placement: findCharacter ? findCharacter.place : null});
+                if (response.data.result) {
+                    const findCharacter = response.data.result.find((item) => item.nickname === request.nickname);
+                    sendResponse({ placement: findCharacter ? findCharacter.place : null});
+                }
             })
             .catch(error => console.error(error))
     }
@@ -31,8 +33,16 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             adapter: fetchAdapter
         })
             .then(response => {
-                let gscore = response.data
+                const char = response.data
                     .split('<span>Максимальный рейтинг</span><span><small>Ур.</small>')[1]
+                if (!char) {
+                    sendResponse({
+                        name: request.name,
+                        gs: 0,
+                    });
+                    return
+                }
+                let gscore = char
                     .split('</small></span></div>')[0]
                     .replace('<small>', '')
                     .replace(',', '')

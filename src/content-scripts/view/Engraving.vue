@@ -4,35 +4,22 @@
             <div class="engraving-image">
                 <img :src="getImageSrc(props.name)" class="engraving-image-item">
             </div>
-            <span :class="{ 'negative-engraving': isNegative }" class="engraving-text">
-                {{ props.name }}
-            </span>
+            <span v-html="html"/>
         </div>
-        <span class="engraving-text">
-            {{ props.level }} ур.
-        </span>
-    </div>
-    <div class="profile-ability-tooltip">
-        <p>{{ props.tooltipText }}</p>
     </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { NEGATIVE_ENGRAVINGS } from "../../constants/NegativeEngravings";
 import { ENGRAVINGS } from "../../constants/Engravings";
 
 const props = defineProps({
     name: String,
-    level: Number,
-    tooltipText: String  
+    html: String,
 })
 
 const getImageSrc = (engraveName) => {
     return 'https://static.monopoly.la.gmru.net/efui_iconatlas' + ENGRAVINGS[engraveName];
 } 
-
-const isNegative = computed(() => NEGATIVE_ENGRAVINGS.includes(props.name))
 </script>
 
 <style scoped>

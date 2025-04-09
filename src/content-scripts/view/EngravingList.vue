@@ -8,9 +8,8 @@
                     class="swiper-slide-item"
                 >
                     <engraving
+                        :html="engravingInfo.html"
                         :name="engravingInfo.name"
-                        :level="engravingInfo.level"
-                        :tooltip-text="engravingInfo.tooltipText"
                     />
                 </li>
             </ul>
@@ -29,5 +28,9 @@ const props = defineProps({
 <style scoped>
 .swiper-slide-item {
     padding: 5px 30px !important;
+}
+
+.engraving-list .engraving-item li.no-before::before {
+    content: none !important;
 }
 </style>

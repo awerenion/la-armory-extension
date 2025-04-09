@@ -1,28 +1,28 @@
 <script setup>
 import { onMounted, reactive } from "vue";
 
-const state = reactive({ loadAtStart: true, modifyEngravings: true, displayQuality: true, loadElixirs: true })
+const state = reactive({ loadAtStart: true, modifyEngravings: true, displayQuality: true, removeUselessInfo: true })
 
 function restoreSettings() {
     chrome.storage.sync.get({
-        loadElixirs: true,
         loadAtStart: true,
         modifyEngravings: true,
-        displayQuality: true
+        displayQuality: true,
+        removeUselessInfo: true,
     }, function (items) {
         state.loadAtStart = items.loadAtStart;
-        state.loadElixirs = items.loadElixirs;
         state.modifyEngravings = items.modifyEngravings;
         state.displayQuality = items.displayQuality;
+        state.removeUselessInfo = items.removeUselessInfo;
     });
 }
 
 function saveSettings() {
     chrome.storage.sync.set({
         loadAtStart: state.loadAtStart,
-        loadElixirs: state.loadElixirs,
         modifyEngravings: state.modifyEngravings,
-        displayQuality: state.displayQuality
+        displayQuality: state.displayQuality,
+        removeUselessInfo: state.removeUselessInfo,
     }, savedSuccessfully);
 }
 
@@ -44,13 +44,6 @@ onMounted(() => {
         <label class="ext-block-labels">
             <input
                 type="checkbox"
-                v-model="state.loadElixirs"
-            >
-            Загружать таблицу эликсиров
-        </label>
-        <label class="ext-block-labels">
-            <input
-                type="checkbox"
                 v-model="state.loadAtStart"
             >
             Загружать рейтинг снаряжения
@@ -68,6 +61,13 @@ onMounted(() => {
                 v-model="state.displayQuality"
             >
             Отображать полоску с качеством
+        </label>
+        <label class="ext-block-labels">
+            <input
+                type="checkbox"
+                v-model="state.removeUselessInfo"
+            >
+            Отображать всю информацию
         </label>
     </div>
     <v-btn

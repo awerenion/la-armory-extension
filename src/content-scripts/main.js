@@ -2,7 +2,8 @@ import { SETTINGS_DEFAULT } from "../constants/SettingsOptions";
 import { displayQuality } from "./modules/quality-mod"
 import { modifyEngravingsList } from "./modules/engravings-mod"
 import { loadAllCharacters } from "./modules/gs-personal";
-import { validateCharacterGs } from "./modules/elixir-personal";
+import { removeUselessInfo } from "./modules/useless-info";
+import { validateCharacterGs } from "./modules/info-panel";
 
 let cachedSettings = {};
 let characterList = [];
@@ -21,13 +22,9 @@ try {
         });
     });
 
-    const charName = document.querySelector('.profile-character-info__name').innerHTML
-
     initStorageCache()
         .then(() => {
-            if (cachedSettings.loadElixirs) {
-                validateCharacterGs(charName)
-            }
+            validateCharacterGs()
             if (cachedSettings.loadAtStart) {
                 loadAllCharacters(characterList)
             }
@@ -36,6 +33,9 @@ try {
             }
             if (cachedSettings.modifyEngravings) {
                 modifyEngravingsList();
+            }
+            if (cachedSettings.removeUselessInfo) {
+                removeUselessInfo();
             }
         });
 } catch (e) {

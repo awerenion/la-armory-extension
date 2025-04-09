@@ -28,5 +28,19 @@
   "host_permissions": [
     "https://lostark.ru/*",
     "https://*.лостарк.рф/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "node_modules/vite/dist/client/*",
+        "src/*",
+        "assets/*",
+        "node_modules/.vite/deps/*",
+        "plugin-vue-export-helper.js"
+      ],
+      "matches": [
+        "https://*.лостарк.рф/*"
+      ]
+    }
   ]
 }

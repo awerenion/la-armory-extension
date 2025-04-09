@@ -8,8 +8,12 @@ export function modifyEngravingsList() {
     const engravingArray = [];
     if (allEngravingList.length > 0) {
         allEngravingList.forEach(element => {
-            let engravingInfo = JSON.parse(element.firstElementChild.innerHTML.replace(/(.+)\s(\d) ур\./g, '{"name":"$1", "level":$2}'))
-            engravingInfo.tooltipText = element.lastElementChild.firstElementChild.innerText
+            element.classList.add('no-before');
+            const engravingInfo = {
+                html: element.innerHTML
+            }
+            const nameElement = element.querySelector('span font');
+            engravingInfo.name = nameElement ? nameElement.textContent : '';
             engravingArray.push(engravingInfo)
         })
     }

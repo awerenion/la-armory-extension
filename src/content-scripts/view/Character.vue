@@ -6,7 +6,7 @@
         >
             <img :src="character.img" :alt="character.characterClass">
             <span>{{ character.name }}({{ character.gs }})</span>
-            Рейтинг: {{ placement || 'Не в рейтинге' }}
+            Рейтинг: {{ placement || 'Вне рейтинга' }}
         </button>
     </span>
 </template>
