@@ -12,13 +12,13 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script-loader.main.js.6be5113c.bde3d4fb.js"
+        "assets/content-script-loader.main.js.54b2efad.18054120.js"
       ],
       "matches": [
         "https://*.лостарк.рф/*"
       ],
       "css": [
-        "assets/main.js.4b1b3acd.css"
+        "assets/main.js.3fac69ee.css"
       ]
     }
   ],
@@ -39,8 +39,21 @@
         "https://*.лостарк.рф/*"
       ],
       "resources": [
-        "assets/plugin-vue_export-helper.ee8e1f3c.js",
-        "assets/main.js.6be5113c.js"
+        "node_modules/vite/dist/client/*",
+        "src/*",
+        "assets/*",
+        "node_modules/.vite/deps/*",
+        "plugin-vue-export-helper.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://*.лостарк.рф/*"
+      ],
+      "resources": [
+        "assets/plugin-vue_export-helper.6bd3650d.js",
+        "assets/main.js.54b2efad.js"
       ],
       "use_dynamic_url": true
     }
