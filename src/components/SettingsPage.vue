@@ -67,7 +67,7 @@ onMounted(() => {
                 type="checkbox"
                 v-model="state.removeUselessInfo"
             >
-            Отображать всю информацию
+            Скрыть "Личность"
         </label>
     </div>
     <v-btn
